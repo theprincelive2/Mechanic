@@ -80,7 +80,8 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
             <details className="ticket rounded-lg pl-6 pr-5 py-3 mt-3">
               <summary className="cursor-pointer text-xs text-amber font-medium">+ Add another vehicle</summary>
               <form action={addVehicleAction} className="grid grid-cols-2 gap-3 mt-3">
-                {["make", "model", "year", "plate", "vin", "color", "mileage"].map((f) => (
+                <MakeSelect />
+                {["model", "year", "plate", "vin", "color", "mileage"].map((f) => (
                   <input
                     key={f}
                     name={f}
@@ -144,6 +145,48 @@ export default async function CustomerDetailPage({ params }: { params: { id: str
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+const CAR_MAKES = [
+  "Toyota", "Nissan", "Honda", "Suzuki", "Mitsubishi", "Mazda", "Subaru",
+  "Hyundai", "Isuzu", "Kia", "KGM", "Genesis",
+  "Volkswagen", "Peugeot", "Renault", "Fiat",
+  "Ford", "Chevrolet", "Jeep", "Tesla",
+  "Mercedes-Benz", "BMW", "Audi", "Lexus",
+  "Land Rover", "Jaguar", "Porsche", "Volvo",
+  "Bentley", "Rolls-Royce", "Ferrari", "Lamborghini",
+  "Jetour", "BYD", "Maserati", "Aston Martin", "McLaren",
+];
+
+function MakeSelect() {
+  return (
+    <div className="col-span-2 grid grid-cols-2 gap-3">
+      <label className="block">
+        <span className="block text-xs font-mono uppercase tracking-wide text-paper/50 mb-1">Make</span>
+        <select
+          name="make"
+          defaultValue=""
+          className="w-full bg-graphite border border-graphite-line rounded px-3 py-2 text-sm outline-none focus:border-amber appearance-none"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center" }}
+        >
+          <option value="" disabled>Select make…</option>
+          {CAR_MAKES.map((m) => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+          <option value="Other">Other</option>
+        </select>
+      </label>
+      <label className="block">
+        <span className="block text-xs font-mono uppercase tracking-wide text-paper/50 mb-1">Other make (if not listed)</span>
+        <input
+          name="make_other"
+          type="text"
+          placeholder="Type make here…"
+          className="w-full bg-graphite border border-graphite-line rounded px-3 py-2 text-sm outline-none focus:border-amber"
+        />
+      </label>
     </div>
   );
 }

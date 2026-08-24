@@ -31,7 +31,9 @@ export async function createCustomer(formData: FormData) {
 
   const [customer] = await db.insert(customers).values({ name, phone, email, address }).returning();
 
-  const make = String(formData.get("make") || "").trim();
+  const rawMake = String(formData.get("make") || "").trim();
+  const makeOther = String(formData.get("make_other") || "").trim();
+  const make = rawMake === "Other" ? makeOther : rawMake;
   const model = String(formData.get("model") || "").trim();
   const plate = String(formData.get("plate") || "").trim();
   if (make && model && plate) {
@@ -53,9 +55,12 @@ export async function createCustomer(formData: FormData) {
 
 export async function addVehicle(customerId: number, formData: FormData) {
   await requireSession();
+  const rawMake = String(formData.get("make") || "").trim();
+  const makeOther = String(formData.get("make_other") || "").trim();
+  const make = rawMake === "Other" ? makeOther : rawMake;
   await db.insert(vehicles).values({
     customerId,
-    make: String(formData.get("make") || ""),
+    make,
     model: String(formData.get("model") || ""),
     plate: String(formData.get("plate") || ""),
     year: Number(formData.get("year")) || null,
