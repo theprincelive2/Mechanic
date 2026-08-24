@@ -1,4 +1,4 @@
-# East Legon Auto Care — Shop Manager
+# East Legon Auto Care — Shop Manager 
 
 A full-stack garage management system: customer & vehicle records with complete
 service history, a job pipeline, digital vehicle inspections, invoicing (VAT/NHIL/GETFund),
